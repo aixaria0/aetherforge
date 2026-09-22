@@ -1,0 +1,11 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function sci(n: number, digits = 2): string {
+  if (!Number.isFinite(n)) return "—";
+  return n.toExponential(digits);
+}
