@@ -1,0 +1,39 @@
+name: Assurance Subject Snapshot
+
+on:
+  pull_request:
+    paths:
+      - "src/lib/physics.ts"
+      - "scripts/export-assurance-snapshot.mjs"
+      - "scripts/export-assurance-snapshot.test.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/assurance-subject.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/lib/physics.ts"
+      - "scripts/export-assurance-snapshot.mjs"
+      - "scripts/export-assurance-snapshot.test.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/assurance-subject.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify deterministic assurance snapshot
+        run: npm run test:assurance-subject
+      - name: Emit snapshot
+        run: npm run assurance:snapshot
