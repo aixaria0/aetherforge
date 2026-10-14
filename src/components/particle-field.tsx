@@ -60,7 +60,7 @@ export function ParticleField() {
     <canvas
       ref={ref}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10"
+      className="pointer-events-none fixed inset-0 z-0 opacity-70"
     />
   );
 }
